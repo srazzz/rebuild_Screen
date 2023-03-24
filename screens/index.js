@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import normalize from 'react-native-normalize';
-import Duplicate from './duplicate';
+import HomePage from './taskbox';
 import ProfileScreen from './premium/premium_index';
+import stackScreen from './journals/stackScreen';
 import theme from './theme';
 
-import HomePage from './taskbox';
 const Tab = createMaterialBottomTabNavigator();
 
 const BottomNavigatorScreen = () => {
@@ -47,7 +47,7 @@ const BottomNavigatorScreen = () => {
       />
       <Tab.Screen
         name="profile"
-        component={Duplicate}
+        component={stackScreen}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({color}) => (
