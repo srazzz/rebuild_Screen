@@ -12,11 +12,14 @@ import theme from '../theme';
 import JournalDisplay from './journalDisplay';
 
 const JournalPage = ({navigation, route}) => {
+  const [update, setUpdate] = useState(false);
   const [cardsData, setCardsData] = useState([
     {
       date: '21 Mar 2023',
       time: 'Tue 9:25',
       imageSelected: [
+        'file:///data/user/0/com.rebuild_screen/cache/rn_image_picker_lib_temp_f2bd744e-db8f-497c-99fe-545b32f1b0a7.jpg',
+        'file:///data/user/0/com.rebuild_screen/cache/rn_image_picker_lib_temp_f2bd744e-db8f-497c-99fe-545b32f1b0a7.jpg',
         'file:///data/user/0/com.rebuild_screen/cache/rn_image_picker_lib_temp_f2bd744e-db8f-497c-99fe-545b32f1b0a7.jpg',
       ],
 
@@ -27,7 +30,7 @@ const JournalPage = ({navigation, route}) => {
     {
       date: '21 Mar 2023',
       time: 'Tue 15:28',
-      imageSelected: [''],
+      imageSelected: [],
       message:
         'Hey there Contact in I3-G50 room in case of any SMS related problem. CITADEL. Copyright © 2015-2018 RGUKT Nuzvid. All rights reserved.',
       title: 'One',
@@ -61,6 +64,8 @@ const JournalPage = ({navigation, route}) => {
           navigation.navigate('addJournal', {
             cardsData: cardsData,
             setCardsData: setCardsData,
+            update: update,
+            setUpdate: setUpdate,
           })
         }>
         <Ionicons name="add" size={25} style={styles.addIcon} />

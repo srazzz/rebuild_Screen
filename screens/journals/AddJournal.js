@@ -12,10 +12,11 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import AddImage from './AddImage';
 
 const AddJournal = ({route, navigation: {goBack}, navigation}) => {
-  const {cardsData, setCardsData} = route.params;
+  const {cardsData, setCardsData, update, setUpdate} = route.params;
   const [visible, setVisible] = useState(false);
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
@@ -38,10 +39,12 @@ const AddJournal = ({route, navigation: {goBack}, navigation}) => {
         message: message,
         time: time,
         date: date,
-        imageSelected: images, ////////////////////////////////////////////////////////////////
+        imageSelected: images,
       };
+      setUpdate(!update); //to refresh the page
       cardsData.push(newJournal);
       setCardsData(cardsData);
+      console.log(newJournal);
       goBack();
     }
   };
