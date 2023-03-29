@@ -7,7 +7,6 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-import normalize from 'react-native-normalize';
 import data from './data/boxinfo';
 import theme from '../theme';
 
