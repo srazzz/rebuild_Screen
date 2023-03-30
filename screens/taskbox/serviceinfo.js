@@ -30,7 +30,13 @@ const ScrollingBox = () => {
         {props.scrolling.length !== 0
           ? props.scrolling.map(each => {
               return (
-                <View key={each.id} style={styles.container}>
+                <View
+                  key={each.id}
+                  style={
+                    each.id !== props.scrolling.length
+                      ? styles.container
+                      : styles.container2
+                  }>
                   <TouchableOpacity onPress={() => handlePress(each.title)}>
                     <View>
                       <Image style={styles.image} source={{uri: each.image}} />
@@ -52,22 +58,28 @@ const ScrollingBox = () => {
 
 const styles = StyleSheet.create({
   svStyle: {
-    paddingBottom: theme.spacing.medium,
-    marginLeft: theme.spacing.small,
+    // paddingBottom: theme.spacing.medium,
   },
   line: {
     borderBottomColor: theme.colors.secondary,
     borderBottomWidth: 2,
-    marginTop: theme.spacing.medium,
-    marginRight: theme.spacing.medium,
+    margin: theme.spacing.medium,
   },
   card: {
     // width: '100%',
     // marginRight: 16,
+    marginLeft: theme.spacing.medium,
   },
   container: {
     width: aspectRatio < 0.6 ? width * 0.29 : width * 0.7,
-    marginLeft: theme.spacing.small,
+    marginRight: theme.spacing.small,
+    backgroundColor: '#231732',
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  container2: {
+    width: aspectRatio < 0.6 ? width * 0.29 : width * 0.7,
+    marginRight: theme.spacing.medium,
     backgroundColor: '#231732',
     borderRadius: 12,
     alignItems: 'center',

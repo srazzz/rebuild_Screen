@@ -8,34 +8,34 @@ import normalize from 'react-native-normalize';
 const Gradient = () => {
   return (
     <LinearGradient
-      colors={['#4C759A', '#886BCB']}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}
-      style={styles.mainContainer}>
-      <View style={styles.mainView}>
-        <View style={styles.content}>
-          <MaterialCommunityIcons
-            name="video-vintage"
-            size={26}
-            color="#FFF"
-            style={styles.videoIcon}
-          />
-          <Text style={styles.contentText}>
-            Live classes @INR 249/month.Join Live Yoga & Medication classes
-            everyday.
-          </Text>
-        </View>
-        <TouchableOpacity style={styles.subscribe}>
-          <MaterialCommunityIcons
-            name="lock-open-outline"
-            size={20}
-            color="black"
-            style={styles.lockIcon}
-          />
-          <Text style={styles.subscribeText}>Subscribe to Premium</Text>
-        </TouchableOpacity>
+    colors={['#4C759A', '#886BCB']}
+    start={{x: 0, y: 0}}
+    end={{x: 1, y: 0}}
+    style={styles.mainContainer}>
+    <View style={styles.mainView}>
+      <View style={styles.content}>
+        <MaterialCommunityIcons
+          name="video-vintage"
+          size={26}
+          color="#FFF"
+          style={styles.videoIcon}
+        />
+        <Text style={styles.contentText}>
+          Live classes @INR 249/month.Join Live Yoga & Medication classes
+          everyday.
+        </Text>
       </View>
-    </LinearGradient>
+      <TouchableOpacity style={styles.subscribe}>
+        <MaterialCommunityIcons
+          name="lock-open-outline"
+          size={20}
+          color="black"
+          style={styles.lockIcon}
+        />
+        <Text style={styles.subscribeText}>Subscribe to Premium</Text>
+      </TouchableOpacity>
+    </View>
+  </LinearGradient>
   );
 };
 const styles = StyleSheet.create({
