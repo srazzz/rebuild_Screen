@@ -1,3 +1,4 @@
+//not using this
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const instructions = () => {

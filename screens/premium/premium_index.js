@@ -12,7 +12,7 @@ import Premium from './PremiumPackage';
 import Suggestions from './Suggestion';
 import theme from '../theme';
 
-function ProfileScreen() {
+function PremiumScreen() {
   return (
     <LinearGradient
       start={{x: 0, y: 0}}
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default PremiumScreen;

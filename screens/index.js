@@ -4,7 +4,7 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import normalize from 'react-native-normalize';
 import HomePage from './taskbox';
-import ProfileScreen from './premium/premium_index';
+import PremiumScreen from './premium/premium_index';
 import stackScreen from './journals/stackScreen';
 import theme from './theme';
 
@@ -33,7 +33,7 @@ const BottomNavigatorScreen = () => {
       />
       <Tab.Screen
         name="Premium"
-        component={ProfileScreen}
+        component={PremiumScreen}
         options={{
           tabBarLabel: 'Premium',
           tabBarIcon: ({color}) => (

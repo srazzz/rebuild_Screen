@@ -44,7 +44,6 @@ const AddJournal = ({route, navigation: {goBack}, navigation}) => {
       setUpdate(!update); //to refresh the page
       cardsData.push(newJournal);
       setCardsData(cardsData);
-      console.log(newJournal);
       goBack();
     }
   };
