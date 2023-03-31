@@ -3,24 +3,27 @@ import {
   Modal,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  TextInput,
 } from 'react-native';
+import Geocoder from 'react-native-geocoder-reborn';
+import Geolocation from 'react-native-geolocation-service';
 import {Platform} from 'react-native';
 import {request, PERMISSIONS} from 'react-native-permissions';
-import Geolocation from 'react-native-geolocation-service';
-import Geocoder from 'react-native-geocoder-reborn';
+
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import theme from '../theme';
 
+//navigation bar in home screen
 const TopNavBar = () => {
   const [location, setLocation] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false); //modal that use to search locations
   const [searchInput, setSearchInput] = useState('');
 
+  //To add location premission
   async function requestLocationPermission() {
     if (Platform.OS === 'ios') {
       const response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
@@ -35,26 +38,38 @@ const TopNavBar = () => {
     }
   }
 
+  //API call to search cities
   useEffect(() => {
     requestLocationPermission();
+    const fetchapi = async () => {
+      try {
+        const res = await fetch(
+          `https://maps.google.com/maps/api/geocode/json?key=AIzaSyC7vpG0k0WSuE3Y7dFO8f_SJ6_4ZgEJlR4&address=${encodeURI(
+            'vi',
+          )}&language=en`,
+        );
+        const json = await res.json();
+      } catch (err) {}
+    };
+    fetchapi();
   }, []);
 
+  //to open locations option in nav-bar
   function openmap() {
+    //To get device current location
     Geolocation.getCurrentPosition(
       position => {
         const {longitude, latitude} = position.coords;
-        console.log('Longitude: ' + longitude);
-        console.log('Latitude: ' + latitude);
-        var NY = {
+        let latLng = {
           lat: latitude,
           // lat:13.0827,
           lng: longitude,
           // lng:80.2707
         };
 
-        Geocoder.geocodePosition(NY)
+        //To get location details given in the searchbox
+        Geocoder.geocodePosition(latLng)
           .then(res => {
-            console.log(res);
             setLocation(res[0].locality);
           })
           .catch(err => console.log(err));
@@ -64,14 +79,14 @@ const TopNavBar = () => {
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
   }
+
+  //Search for cities by using searchText
+  //searchText is to read data that user given in the searchbox
   function searchingCity(searchText) {
     Geocoder.geocodeAddress(searchText)
       .then(res => {
         // console.log(res[0].locality);
-        console.log(
-          res,
-          'Responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
-        );
+        console.log(res);
       })
       .catch(err => console.log(err));
   }

@@ -1,18 +1,20 @@
 import React from 'react';
 import {
+  Dimensions,
   FlatList,
   Image,
   StyleSheet,
   Text,
   View,
-  Dimensions,
 } from 'react-native';
-import data from './data/boxinfo';
+import data from './data/boxinfo'; //data is data in the tiles
 import theme from '../theme';
 
 const numColumns = 3;
 const {width, height} = Dimensions.get('window');
-const aspectRatio = width / height;
+const aspectRatio = width / height; //aspectRatio is to declare the height and width of the tile
+
+//each tile contain image and title
 const Box = ({title, image}) => {
   return (
     <View style={styles.box}>

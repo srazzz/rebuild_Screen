@@ -1,12 +1,17 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import TopNavBar from './Nav';
-import ScrollingBox from './LiveBannerCards';
-import BoxGrid from './task';
+import BoxGrid from './Tiles';
 import Gradient from './SubscribeBanner';
+import ScrollingBox from './LiveBannerCards';
+import TopNavBar from './HomeNavigation';
 import theme from '../theme';
-
+import {homePageData} from '../apiCalls';
+//homeScreen page
 const HomePage = () => {
+  //fetching data from api
+  homePageData().then(data => {
+    console.log(data, 'in homepage'); // prints the fetched data
+  });
   return (
     <View style={styles.container}>
       <TopNavBar />
