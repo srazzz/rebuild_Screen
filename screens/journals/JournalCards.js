@@ -82,11 +82,6 @@ const JournalCards = journalsData => {
                       setShowTransition(
                         instructionShown === 'true' ? false : true,
                       ) +
-                      console.log(
-                        instructionShown,
-                        'shown',
-                        !instructionShown,
-                      ) +
                       setDisplayingImages(eachJournal.imageSelected)
                     }>
                     <Image

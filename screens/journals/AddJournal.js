@@ -8,6 +8,7 @@ import {
   ScrollView,
   Alert,
   Modal,
+  DeviceEventEmitter,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,7 +17,7 @@ import AddImage from './AddImage';
 
 const AddJournal = ({route, navigation: {goBack}}) => {
   //params from journalCards
-  const {cardsData, setCardsData, update, setUpdate} = route.params;
+  const {cardsData} = route.params;
   const [visible, setVisible] = useState(false); //to decalre the visibility of AddImage modal
   //details to be filled to add new journal
   const [title, setTitle] = useState('');
@@ -46,9 +47,11 @@ const AddJournal = ({route, navigation: {goBack}}) => {
         date: date,
         imageSelected: images,
       };
-      setUpdate(!update); //to refresh the page
+      // setUpdate(!update); //to refresh the page
       cardsData.push(newJournal); //adding new journal to cardsData
-      setCardsData(cardsData);
+      // setCardsData(cardsData);
+      DeviceEventEmitter.emit('refresh', cardsData);
+
       goBack();
     }
   };

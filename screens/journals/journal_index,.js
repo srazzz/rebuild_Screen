@@ -1,10 +1,11 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {
   StyleSheet,
   ScrollView,
   TouchableOpacity,
   Text,
   View,
+  DeviceEventEmitter,
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -13,7 +14,6 @@ import theme from '../theme';
 import JournalCards from './JournalCards'; //displaying cards in journals page
 
 const JournalPage = ({navigation}) => {
-  const [update, setUpdate] = useState(false); //checking if the cardsData is updated by other screens
   const [cardsData, setCardsData] = useState([
     {
       date: '21 Mar 2023',
@@ -37,7 +37,14 @@ const JournalPage = ({navigation}) => {
       title: 'One',
     },
   ]);
-
+  useEffect(() => {
+    //this is to avoid error : non serializable values were found in the navigation state
+    // refresh is the event name, we call this in signUp screen to refresh this page after signUp
+    DeviceEventEmitter.addListener('refresh', data => {
+      setCardsData(data);
+    });
+    return () => DeviceEventEmitter.removeAllListeners();
+  }, []);
   return (
     <View
       style={{
@@ -64,9 +71,6 @@ const JournalPage = ({navigation}) => {
         onPress={() =>
           navigation.navigate('addJournal', {
             cardsData: cardsData,
-            setCardsData: setCardsData,
-            update: update,
-            setUpdate: setUpdate,
           })
         }>
         <Ionicons name="add" size={25} style={styles.addIcon} />
