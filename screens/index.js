@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import normalize from 'react-native-normalize';
-import HomePage from './taskbox';
+import HomePage from './taskbox/HomeScreen';
 import PremiumScreen from './premium/premium_index';
 import stackScreen from './journals/stackScreen';
 import theme from './theme';

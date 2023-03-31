@@ -4,53 +4,56 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
+  FlatList,
   TouchableOpacity,
   Alert,
   Dimensions,
 } from 'react-native';
 import normalize from 'react-native-normalize';
-import props from './data/info.json';
+import LiveBannerinfo from './data/info.json';  //LiveBannerinfo are data in live banner
 import theme from '../theme';
 
 const {width, height} = Dimensions.get('window');
-const aspectRatio = width / height;
+const aspectRatio = width / height;   //aspectRatio to declear height and widht of the card
+
+//This is for livebannercards
 
 const ScrollingBox = () => {
   const handlePress = title => {
     Alert.alert(title);
   };
 
+  const renderItem = ({item}) => {
+    return (
+      <View
+        style={
+          item.id !== LiveBannerinfo.scrolling.length
+            ? styles.container
+            : styles.container2
+        }>
+        <TouchableOpacity onPress={() => handlePress(item.title)}>
+          <View>
+            <Image style={styles.image} source={{uri: item.image}} />
+          </View>
+          <View style={styles.textInBox}>
+            <Text style={styles.heading}>{item.title}</Text>
+            <Text style={styles.content}>{item.name}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.svStyle}>
-      <ScrollView
-        horizontal
+      <FlatList
+        data={LiveBannerinfo.scrolling}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
         style={styles.card}
-        showsHorizontalScrollIndicator={false}>
-        {props.scrolling.length !== 0
-          ? props.scrolling.map(each => {
-              return (
-                <View
-                  key={each.id}
-                  style={
-                    each.id !== props.scrolling.length
-                      ? styles.container
-                      : styles.container2
-                  }>
-                  <TouchableOpacity onPress={() => handlePress(each.title)}>
-                    <View>
-                      <Image style={styles.image} source={{uri: each.image}} />
-                    </View>
-                    <View style={styles.textInBox}>
-                      <Text style={styles.heading}>{each.title}</Text>
-                      <Text style={styles.content}>{each.name}</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              );
-            })
-          : null}
-      </ScrollView>
+      />
       <View style={styles.line}></View>
     </View>
   );

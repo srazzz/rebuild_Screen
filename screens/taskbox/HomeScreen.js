@@ -1,10 +1,12 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import TopNavBar from './Nav';
-import ScrollingBox from './serviceinfo';
-import BoxGrid from './task';
-import Gradient from './Gradient';
+import BoxGrid from './Tiles';
+import Gradient from './SubscribeBanner';
+import ScrollingBox from './LiveBannerCards';
+import TopNavBar from './HomeNavigation';
 import theme from '../theme';
+
+//This is homescreen main page
 
 const HomePage = () => {
   return (

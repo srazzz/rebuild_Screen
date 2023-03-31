@@ -7,19 +7,23 @@ import {
   View,
   TextInput,
 } from 'react-native';
+import Geocoder from 'react-native-geocoder-reborn';
+import Geolocation from 'react-native-geolocation-service';  
 import {Platform} from 'react-native';
 import {request, PERMISSIONS} from 'react-native-permissions';
-import Geolocation from 'react-native-geolocation-service';
-import Geocoder from 'react-native-geocoder-reborn';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import theme from '../theme';
 
+//This is navigation bar in home screen
+
 const TopNavBar = () => {
   const [location, setLocation] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
-  const [searchInput, setSearchInput] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);  //modal that use to search locations
+  const [searchInput, setSearchInput] = useState('');  
+
+  //To add location premission
 
   async function requestLocationPermission() {
     if (Platform.OS === 'ios') {
@@ -35,23 +39,28 @@ const TopNavBar = () => {
     }
   }
 
+  //API call to search data
+
   useEffect(() => {
     requestLocationPermission();
     const fetchapi = async() =>{
       try{
         const res = await fetch(`https://maps.google.com/maps/api/geocode/json?key=AIzaSyC7vpG0k0WSuE3Y7dFO8f_SJ6_4ZgEJlR4&address=${encodeURI("vi")}&language=en`)
         const json = await res.json();
-        console.log(json,"11111111111")
+        console.log(json)
       }
       catch(err){
-        console.log(err,"this isssssssssssssssssss theeeeeeeeeeeeeeeeeeeeee errrrrrrrrrroorrrrrrrrrr in nav.js")
       }
-
     }
     fetchapi()
   }, []);
 
+  //to open locations option in nav-bar
+
   function openmap() {
+
+    //To get current location
+
     Geolocation.getCurrentPosition(
       position => {
         const {longitude, latitude} = position.coords;
@@ -64,6 +73,8 @@ const TopNavBar = () => {
           // lng:80.2707
         };
 
+    //To get location details given in the searchbox
+  
         Geocoder.geocodePosition(NY)
           .then(res => {
             console.log(res)
@@ -76,11 +87,15 @@ const TopNavBar = () => {
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000},
     );
   }
+
+  //Search for cities by using searchText 
+  //searchText is to read data that user given in the searchbox
+
   function searchingCity(searchText) {
     Geocoder.geocodeAddress(searchText)
       .then(res => {
         // console.log(res[0].locality);
-        console.log(res , "Responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        console.log(res);
       })
       .catch(err => console.log(err));
   }
