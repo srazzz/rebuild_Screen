@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import TopNavBar from './Nav';
-import ScrollingBox from './serviceinfo';
+import ScrollingBox from './LiveBannerCards';
 import BoxGrid from './task';
-import Gradient from './Gradient';
+import Gradient from './SubscribeBanner';
 import theme from '../theme';
 
 const HomePage = () => {

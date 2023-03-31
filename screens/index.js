@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import normalize from 'react-native-normalize';
 import HomePage from './taskbox';
 import PremiumScreen from './premium/premium_index';
-import stackScreen from './journals/stackScreen';
+import stackNavigation from './journals/stackNavigation';
 import theme from './theme';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -47,9 +47,9 @@ const BottomNavigatorScreen = () => {
       />
       <Tab.Screen
         name="profile"
-        component={stackScreen}
+        component={stackNavigation}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'Journals',
           tabBarIcon: ({color}) => (
             <MaterialCommunityIcons
               name="account"

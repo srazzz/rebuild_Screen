@@ -1,18 +1,19 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {
-  View,
-  Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Text,
+  View,
 } from 'react-native';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../theme';
-import JournalDisplay from './journalDisplay';
+import JournalCards from './JournalCards'; //displaying cards in journals page
 
-const JournalPage = ({navigation, route}) => {
-  const [update, setUpdate] = useState(false);
+const JournalPage = ({navigation}) => {
+  const [update, setUpdate] = useState(false); //checking if the cardsData is updated by other screens
   const [cardsData, setCardsData] = useState([
     {
       date: '21 Mar 2023',
@@ -55,7 +56,7 @@ const JournalPage = ({navigation, route}) => {
         </View>
       </View>
       <ScrollView style={styles.scrollStyle}>
-        <JournalDisplay cardsData={cardsData} />
+        <JournalCards cardsData={cardsData} />
       </ScrollView>
 
       <TouchableOpacity

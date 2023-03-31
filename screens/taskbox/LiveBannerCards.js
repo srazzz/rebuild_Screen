@@ -4,7 +4,7 @@ import {
   StyleSheet,
   View,
   Text,
-  ScrollView,
+  FlatList,
   TouchableOpacity,
   Alert,
   Dimensions,
@@ -21,36 +21,37 @@ const ScrollingBox = () => {
     Alert.alert(title);
   };
 
+  const renderItem = ({item}) => {
+    return (
+      <View
+        style={
+          item.id !== props.scrolling.length
+            ? styles.container
+            : styles.container2
+        }>
+        <TouchableOpacity onPress={() => handlePress(item.title)}>
+          <View>
+            <Image style={styles.image} source={{uri: item.image}} />
+          </View>
+          <View style={styles.textInBox}>
+            <Text style={styles.heading}>{item.title}</Text>
+            <Text style={styles.content}>{item.name}</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.svStyle}>
-      <ScrollView
-        horizontal
+      <FlatList
+        data={props.scrolling}
+        keyExtractor={item => item.id.toString()}
+        renderItem={renderItem}
+        showsHorizontalScrollIndicator={false}
+        horizontal={true}
         style={styles.card}
-        showsHorizontalScrollIndicator={false}>
-        {props.scrolling.length !== 0
-          ? props.scrolling.map(each => {
-              return (
-                <View
-                  key={each.id}
-                  style={
-                    each.id !== props.scrolling.length
-                      ? styles.container
-                      : styles.container2
-                  }>
-                  <TouchableOpacity onPress={() => handlePress(each.title)}>
-                    <View>
-                      <Image style={styles.image} source={{uri: each.image}} />
-                    </View>
-                    <View style={styles.textInBox}>
-                      <Text style={styles.heading}>{each.title}</Text>
-                      <Text style={styles.content}>{each.name}</Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              );
-            })
-          : null}
-      </ScrollView>
+      />
       <View style={styles.line}></View>
     </View>
   );

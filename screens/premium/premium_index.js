@@ -7,8 +7,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import normalize from 'react-native-normalize';
 
-import BenifitsPremium from './BenifitsPremium';
-import Premium from './PremiumPackage';
+import BenifitsPremium from './BenifitsList';
+import Premium from './PakageCards';
 import Suggestions from './Suggestion';
 import theme from '../theme';
 

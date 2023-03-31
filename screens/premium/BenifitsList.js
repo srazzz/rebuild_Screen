@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import normalize from 'react-native-normalize';
 import Icon from 'react-native-vector-icons/MaterialIcons';

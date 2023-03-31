@@ -37,18 +37,6 @@ const TopNavBar = () => {
 
   useEffect(() => {
     requestLocationPermission();
-    const fetchapi = async() =>{
-      try{
-        const res = await fetch(`https://maps.google.com/maps/api/geocode/json?key=AIzaSyC7vpG0k0WSuE3Y7dFO8f_SJ6_4ZgEJlR4&address=${encodeURI("vi")}&language=en`)
-        const json = await res.json();
-        console.log(json,"11111111111")
-      }
-      catch(err){
-        console.log(err,"this isssssssssssssssssss theeeeeeeeeeeeeeeeeeeeee errrrrrrrrrroorrrrrrrrrr in nav.js")
-      }
-
-    }
-    fetchapi()
   }, []);
 
   function openmap() {
@@ -66,7 +54,7 @@ const TopNavBar = () => {
 
         Geocoder.geocodePosition(NY)
           .then(res => {
-            console.log(res)
+            console.log(res);
             setLocation(res[0].locality);
           })
           .catch(err => console.log(err));
@@ -80,7 +68,10 @@ const TopNavBar = () => {
     Geocoder.geocodeAddress(searchText)
       .then(res => {
         // console.log(res[0].locality);
-        console.log(res , "Responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+        console.log(
+          res,
+          'Responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+        );
       })
       .catch(err => console.log(err));
   }

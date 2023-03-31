@@ -55,6 +55,7 @@ const data = [
 ];
 
 const Premium = () => {
+  //checkbox visibility
   const [indexSelected, setIndexSelected] = useState({
     STARTER: 2,
     LITE: 2,
