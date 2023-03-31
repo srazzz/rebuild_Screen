@@ -1,23 +1,22 @@
 import React from 'react';
 import {
-  Image,
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
   Alert,
   Dimensions,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import normalize from 'react-native-normalize';
-import LiveBannerinfo from './data/info.json';  //LiveBannerinfo are data in live banner
+import LiveBannerinfo from './data/info.json'; //LiveBannerinfo are data in live banner
 import theme from '../theme';
 
 const {width, height} = Dimensions.get('window');
-const aspectRatio = width / height;   //aspectRatio to declear height and widht of the card
+const aspectRatio = width / height; //aspectRatio to declare height and width of the card
 
-//This is for livebannercards
-
+//alert for Live banners
 const ScrollingBox = () => {
   const handlePress = title => {
     Alert.alert(title);
@@ -60,17 +59,12 @@ const ScrollingBox = () => {
 };
 
 const styles = StyleSheet.create({
-  svStyle: {
-    // paddingBottom: theme.spacing.medium,
-  },
   line: {
     borderBottomColor: theme.colors.secondary,
     borderBottomWidth: 2,
     margin: theme.spacing.medium,
   },
   card: {
-    // width: '100%',
-    // marginRight: 16,
     marginLeft: theme.spacing.medium,
   },
   container: {
@@ -95,7 +89,7 @@ const styles = StyleSheet.create({
   },
   textInBox: {
     alignItems: 'center',
-    padding: normalize(6), //doubt1
+    padding: normalize(6),
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -104,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: 'SF Pro Display',
     fontStyle: 'normal',
     fontWeight: theme.fontWeight.bold,
-    fontSize: normalize(12), //doubt2
+    fontSize: normalize(12),
     margin: 4,
     textAlign: 'center',
   },

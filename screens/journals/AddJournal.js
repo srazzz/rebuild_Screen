@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {
   Text,
   View,
@@ -8,32 +8,38 @@ import {
   ScrollView,
   Alert,
   Modal,
+  DeviceEventEmitter,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import AddImage from './AddImage';
 
-const AddJournal = ({route, navigation: {goBack}, navigation}) => {
-  const {cardsData, setCardsData, update, setUpdate} = route.params;
-  const [visible, setVisible] = useState(false);
+const AddJournal = ({route, navigation: {goBack}}) => {
+  //params from journalCards
+  const {cardsData} = route.params;
+  const [visible, setVisible] = useState(false); //to decalre the visibility of AddImage modal
+  //details to be filled to add new journal
   const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
   const [images, setImages] = useState([]);
 
-  let date = new Date().toDateString().split(' ');
-  let time = new Date().toTimeString().split(' ');
-  time = date[0] + ' ' + time[0].split(':')[0] + ':' + time[0].split(':')[1];
-  date = date[2] + ' ' + date[1] + ' ' + date[3] + ' ';
+  // taking current date, time from Date() function and converting into desirable format
+  let date = new Date().toDateString().split(' '); //[day ,month ,date, year]
+  let time = new Date().toTimeString().split(' '); //[hours:minutes:seconds , GMT+0000 , (Coordinated', 'Universal', 'Time)]
+  time = date[0] + ' ' + time[0].split(':')[0] + ':' + time[0].split(':')[1]; //day hours:minutes
+  date = date[2] + ' ' + date[1] + ' ' + date[3] + ' '; //date month year
   const dateTime = time + ', ' + date;
 
+  //on Submmit
   const handleSubmit = () => {
+    //validation
     if (title === '') {
       Alert.alert('Error', 'enter title field');
     } else if (message === '') {
       Alert.alert('Error', 'enter message');
     } else {
+      //new journal format
       const newJournal = {
         title: title,
         message: message,
@@ -41,9 +47,11 @@ const AddJournal = ({route, navigation: {goBack}, navigation}) => {
         date: date,
         imageSelected: images,
       };
-      setUpdate(!update); //to refresh the page
-      cardsData.push(newJournal);
-      setCardsData(cardsData);
+      // setUpdate(!update); //to refresh the page
+      cardsData.push(newJournal); //adding new journal to cardsData
+      // setCardsData(cardsData);
+      DeviceEventEmitter.emit('refresh', cardsData);
+
       goBack();
     }
   };
@@ -144,7 +152,11 @@ const AddJournal = ({route, navigation: {goBack}, navigation}) => {
       </View>
 
       <Modal visible={visible} transparent={true}>
-        <AddImage setVisible={setVisible} setImage={setImages} image={images} />
+        <AddImage
+          setVisible={setVisible}
+          setImages={setImages}
+          images={images}
+        />
       </Modal>
     </View>
   );

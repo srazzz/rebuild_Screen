@@ -11,32 +11,37 @@ import {
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'; //to store key-value pair (global storage  for app)
 
-let dummy = '';
+let instructionShown = '';
+//creating new key-value pair in AsyncStorage
 const setShow = async value => {
   try {
+    //key-pair is to check weather the scroll to view more images instruction is shown
     await AsyncStorage.setItem('show', value);
   } catch (error) {
     console.log(error);
   }
 };
 
-setShow('falses');
+setShow('false'); //setting is the instruction shown to be false
 
+//get the value of show key to check the instructions for user is shown or not
 const getShow = async () => {
   try {
     const value = await AsyncStorage.getItem('show');
-    dummy = value;
+    instructionShown = value;
   } catch (err) {
     console.log(err);
   }
 };
-const JournalDisplay = props => {
-  const [showImages, setShowImages] = useState(false);
-  const [displayingImages, setDisplayingImages] = useState([]);
-  const [showTransition, setShowTransition] = useState(false);
 
+const JournalCards = journalsData => {
+  const [showImages, setShowImages] = useState(false); //modal to display all images of that journal
+  const [displayingImages, setDisplayingImages] = useState([]);
+  const [showTransition, setShowTransition] = useState(false); //instruction scroll to view more should be shown or not
+
+  //converting 24 hours time to 12 hours with AM PM
   const formatAmPm = time => {
     time = time.split(' ');
     ampm = time[1].split(':');
@@ -51,6 +56,7 @@ const JournalDisplay = props => {
   const [isGoingUp, setIsGoingUp] = useState(true);
 
   useEffect(() => {
+    //transition of scroll to view more text
     const animateView = () => {
       Animated.timing(animation, {
         toValue: isGoingUp ? -30 : 0,
@@ -60,23 +66,22 @@ const JournalDisplay = props => {
     };
 
     animateView();
-    getShow();
+    getShow(); //getting the value from asyncStorge
   }, [animation, isGoingUp, getShow]);
 
   return (
     <>
-      {/* <Modal visible={showTransition} transparent={true}> */}
-
-      {props.cardsData
-        ? props.cardsData.map(eachJournal => {
+      {journalsData.cardsData
+        ? journalsData.cardsData.map(eachJournal => {
             return (
               <View style={styles.journal} key={eachJournal.time}>
                 {eachJournal.imageSelected.length !== 0 ? (
                   <TouchableOpacity
                     onPress={() =>
                       setShowImages(true) +
-                      setShowTransition(dummy === 'trues' ? false : true) +
-                      console.log(dummy, 'shown', !dummy) +
+                      setShowTransition(
+                        instructionShown === 'true' ? false : true,
+                      ) +
                       setDisplayingImages(eachJournal.imageSelected)
                     }>
                     <Image
@@ -87,7 +92,7 @@ const JournalDisplay = props => {
                     {eachJournal.imageSelected.length > 1 ? (
                       <View style={styles.extraImages}>
                         <Entypo name="images" size={15} color="black" />
-                        <Text style={{color: '#FA826F', marginLeft: 5}}>
+                        <Text style={styles.imagesText}>
                           +{eachJournal.imageSelected.length - 1} images
                         </Text>
                       </View>
@@ -137,7 +142,7 @@ const JournalDisplay = props => {
                     {showTransition ? (
                       <TouchableOpacity
                         onPress={() =>
-                          setShowTransition(false) + setShow('trues')
+                          setShowTransition(false) + setShow('true')
                         }
                         style={styles.mask}>
                         <Animated.View
@@ -251,5 +256,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 16,
   },
+  imagesText: {color: '#FA826F', marginLeft: 5},
 });
-export default JournalDisplay;
+export default JournalCards;

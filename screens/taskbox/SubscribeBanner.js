@@ -1,43 +1,51 @@
 import React from 'react';
+<<<<<<< HEAD
 import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
+=======
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+>>>>>>> 445a40ee1b69e549b25f51f671e8a8d431df7db5
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import normalize from 'react-native-normalize';
 import theme from '../theme';
+<<<<<<< HEAD
 
 //Subscription Banner  
+=======
+>>>>>>> 445a40ee1b69e549b25f51f671e8a8d431df7db5
 
+//Subscription Banner
 const Gradient = () => {
   return (
     <LinearGradient
-    colors={['#4C759A', '#886BCB']}
-    start={{x: 0, y: 0}}
-    end={{x: 1, y: 0}}
-    style={styles.mainContainer}>
-    <View style={styles.mainView}>
-      <View style={styles.content}>
-        <MaterialCommunityIcons
-          name="video-vintage"
-          size={26}
-          color="#FFF"
-          style={styles.videoIcon}
-        />
-        <Text style={styles.contentText}>
-          Live classes @INR 249/month.Join Live Yoga & Medication classes
-          everyday.
-        </Text>
+      colors={['#4C759A', '#886BCB']}
+      start={{x: 0, y: 0}}
+      end={{x: 1, y: 0}}
+      style={styles.mainContainer}>
+      <View style={styles.mainView}>
+        <View style={styles.content}>
+          <MaterialCommunityIcons
+            name="video-vintage"
+            size={26}
+            color="#FFF"
+            style={styles.videoIcon}
+          />
+          <Text style={styles.contentText}>
+            Live classes @INR 249/month.Join Live Yoga & Medication classes
+            everyday.
+          </Text>
+        </View>
+        <TouchableOpacity style={styles.subscribe}>
+          <MaterialCommunityIcons
+            name="lock-open-outline"
+            size={20}
+            color="black"
+            style={styles.lockIcon}
+          />
+          <Text style={styles.subscribeText}>Subscribe to Premium</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.subscribe}>
-        <MaterialCommunityIcons
-          name="lock-open-outline"
-          size={20}
-          color="black"
-          style={styles.lockIcon}
-        />
-        <Text style={styles.subscribeText}>Subscribe to Premium</Text>
-      </TouchableOpacity>
-    </View>
-  </LinearGradient>
+    </LinearGradient>
   );
 };
 const styles = StyleSheet.create({

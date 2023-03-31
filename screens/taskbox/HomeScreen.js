@@ -5,10 +5,13 @@ import Gradient from './SubscribeBanner';
 import ScrollingBox from './LiveBannerCards';
 import TopNavBar from './HomeNavigation';
 import theme from '../theme';
-
-//This is homescreen main page
-
+import {homePageData} from '../apiCalls';
+//homeScreen page
 const HomePage = () => {
+  //fetching data from api
+  homePageData().then(data => {
+    console.log(data, 'in homepage'); // prints the fetched data
+  });
   return (
     <View style={styles.container}>
       <TopNavBar />
