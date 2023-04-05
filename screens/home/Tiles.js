@@ -10,7 +10,7 @@ import {
 import {homePageData} from '../apiCalls';
 import theme from '../theme';
 
-const numColumns = 3;
+const numColumns = 3; 
 const {width, height} = Dimensions.get('window');
 const aspectRatio = width / height; //aspectRatio is to declare the height and width of the tile
 
