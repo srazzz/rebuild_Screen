@@ -1,18 +1,37 @@
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import normalize from 'react-native-normalize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../theme';
-const suggestions_data = ['a', 'b', 'c', 'd'];
+import {premiumPageData} from '../apiCalls';
 
 const Suggestions = () => {
+  const [suggestionsData, setSuggestionsData] = useState([]);
+
+  useEffect(() => {
+    try {
+      premiumPageData().then(data => {
+        setSuggestionsData(data ? data.suggestions : []);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <>
       <Text style={styles.heading}>You may also like</Text>
 
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
         <View style={styles.container}>
-          {suggestions_data.length !== 0
-            ? suggestions_data.map(item => (
+          {suggestionsData.length !== 0
+            ? suggestionsData.map(item => (
                 <View style={styles.suggestion_box} key={item}>
                   <Text>{item}</Text>
                 </View>
@@ -20,14 +39,14 @@ const Suggestions = () => {
             : null}
         </View>
       </ScrollView>
-      <View style={styles.explore}>
+      <TouchableOpacity style={styles.explore}>
         <Text style={styles.explore_text}>Explore more </Text>
         <MaterialCommunityIcons
           name="menu-right"
           size={40}
           style={styles.explore_text}
         />
-      </View>
+      </TouchableOpacity>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
@@ -47,6 +47,7 @@ const AddJournal = ({route, navigation: {goBack}}) => {
         date: date,
         imageSelected: images,
       };
+      console.log(newJournal);
       // setUpdate(!update); //to refresh the page
       cardsData.push(newJournal); //adding new journal to cardsData
       // setCardsData(cardsData);
@@ -87,35 +88,21 @@ const AddJournal = ({route, navigation: {goBack}}) => {
           value={dateTime}
         />
 
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-          }}>
+        <View style={styles.extraImagesText}>
           <Text style={styles.labels}>Images ({images.length})</Text>
           <TouchableOpacity onPress={() => setVisible(true)}>
-            <Text
-              style={[
-                {
-                  borderColor: '#4C759A',
-                  color: '#4C759A',
-                  borderBottomWidth: 1,
-                  fontSize: 18,
-                },
-              ]}>
-              Add
-            </Text>
+            <Text style={styles.addImage}>Add</Text>
           </TouchableOpacity>
         </View>
 
         {images.length !== 0
           ? images.map(imageUrl => (
               <View style={styles.eachImage} key={imageUrl}>
-                <TouchableOpacity onPress={() => pickImage()}>
+                <TouchableOpacity>
                   <EvilIcons name="image" size={30} style={styles.cameraIcon} />
                 </TouchableOpacity>
                 <Text
-                  style={{color: 'black', flexShrink: 10}}
+                  style={styles.imageURL}
                   numberOfLines={1}
                   ellipsizeMode="middle">
                   {imageUrl}
@@ -138,16 +125,12 @@ const AddJournal = ({route, navigation: {goBack}}) => {
 
       <View style={styles.buttons}>
         <TouchableOpacity style={styles.closeButton} onPress={() => goBack()}>
-          <Text style={{alignSelf: 'center', color: '#F9826D', fontSize: 16}}>
-            CLOSE
-          </Text>
+          <Text style={styles.closeButtonText}>CLOSE</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => handleSubmit()}>
-          <Text style={{alignSelf: 'center', color: 'white', fontSize: 16}}>
-            ADD
-          </Text>
+          <Text style={styles.addButtonText}>ADD</Text>
         </TouchableOpacity>
       </View>
 
@@ -192,6 +175,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
   },
+  addButtonText: {alignSelf: 'center', color: 'white', fontSize: 16},
   closeButton: {
     borderColor: '#F9826D',
     borderWidth: 2,
@@ -200,6 +184,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
   },
+  closeButtonText: {alignSelf: 'center', color: '#F9826D', fontSize: 16},
   labels: {
     color: 'black',
     fontSize: 18,
@@ -209,7 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 16,
-    marginBottom: 100,
+    marginBottom: 80,
   },
   imagePicked: {
     width: '100%',
@@ -234,6 +219,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
   },
+  imageURL: {color: 'black', flexShrink: 10},
+  addImage: {
+    borderColor: '#4C759A',
+    color: '#4C759A',
+    borderBottomWidth: 1,
+    fontSize: 18,
+  },
+  extraImagesText: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 export default AddJournal;
-//react native timeline listview

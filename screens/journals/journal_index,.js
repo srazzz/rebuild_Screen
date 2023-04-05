@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   ScrollView,
@@ -46,11 +46,7 @@ const JournalPage = ({navigation}) => {
     return () => DeviceEventEmitter.removeAllListeners();
   }, []);
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-      }}>
+    <View style={styles.container}>
       <View style={styles.navbarStyle}>
         <Text style={styles.heading}>Journals</Text>
         <View style={styles.NavIcons}>
@@ -80,6 +76,10 @@ const JournalPage = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
   navbarStyle: {
     height: 50,
     flexDirection: 'row',

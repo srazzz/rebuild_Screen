@@ -1,3 +1,4 @@
+import React from 'react';
 import {Alert, StyleSheet, TouchableOpacity, Text, View} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
@@ -23,35 +24,43 @@ const AddImage = addedImages => {
 
   //when user clicked gallery option to add image
   const openGallery = () => {
-    launchImageLibrary(options, response => {
-      //launching the camera
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        Alert('ImagePicker Error: ', response.error);
-      } else {
-        handleImages(response);
-      }
-    });
+    try {
+      launchImageLibrary(options, response => {
+        //launching the camera
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          Alert('ImagePicker Error: ', response.error);
+        } else {
+          handleImages(response);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   //when user clicked camera option to add image
   const openCamera = () => {
-    launchCamera(options, response => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        Alert('ImagePicker Error: ', response.error);
-      } else {
-        handleImages(response);
-      }
-    });
+    try {
+      launchCamera(options, response => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          Alert('ImagePicker Error: ', response.error);
+        } else {
+          handleImages(response);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <View style={styles.modalStyle}>
       <View style={styles.options}>
-        <TouchableOpacity onPress={() => props.setVisible(false)}>
+        <TouchableOpacity onPress={() => addedImages.setVisible(false)}>
           <Entypo name="circle-with-cross" size={22} style={styles.crossIcon} />
         </TouchableOpacity>
 

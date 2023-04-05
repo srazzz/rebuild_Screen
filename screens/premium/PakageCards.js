@@ -1,88 +1,68 @@
-import react, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import normalize from 'react-native-normalize';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import theme from '../theme';
-
-const data = [
-  {
-    name: 'STARTER',
-    prices: {
-      Monthly: '99',
-      Quarter: '249',
-      Year: '899',
-    },
-    details: [
-      '4 Live Classes (per month)',
-      'Special Regimens',
-      'Analytics Reports',
-      'Tracker',
-    ],
-  },
-  {
-    name: 'LITE',
-    prices: {
-      Monthly: '249',
-      Quarter: '689',
-      Year: '2299',
-    },
-    details: [
-      '8 Live Classes (per month)',
-      'Special Regimens',
-      'Analytics Reports',
-      'Tracker',
-      '5.00% Test Discounts',
-    ],
-  },
-  {
-    name: 'CORE',
-    prices: {
-      Monthly: '649',
-      Quarter: '1749',
-      Year: '5949',
-    },
-    details: [
-      '100 Live Classes (per month)',
-      'Special Regimens',
-      'Analytics Reports',
-      'Tracker',
-      '7.50% Test Discounts',
-    ],
-  },
-];
+import {premiumPageData} from '../apiCalls';
 
 const Premium = () => {
   //checkbox visibility
-  const [indexSelected, setIndexSelected] = useState({
-    STARTER: 2,
-    LITE: 2,
-    CORE: 2,
-  });
+  const [indexSelected, setIndexSelected] = useState({});
+  const [packageSchemes, setPackageSchemes] = useState(null);
+
+  useEffect(() => {
+    //fetching data from api
+    try {
+      premiumPageData().then(data => {
+        setPackageSchemes(data ? data.subscriptionPackages : null);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    const defaultSelectedPlans = [];
+
+    const getDefaultSelectedIds = () => {
+      packageSchemes.map(eachPackage => {
+        defaultSelectedPlans.push(eachPackage.defaultSelectedPlanId);
+      });
+    };
+
+    if (packageSchemes) {
+      getDefaultSelectedIds();
+      setIndexSelected({
+        starter: defaultSelectedPlans[0],
+        lite: defaultSelectedPlans[1],
+        core: defaultSelectedPlans[2],
+      });
+    }
+  }, [packageSchemes]);
 
   return (
     <>
-      {data.length !== 0
-        ? data.map(eachItem => (
-            <View style={styles.box} key={eachItem.name}>
+      {packageSchemes && packageSchemes.length !== 0
+        ? packageSchemes.map(eachItem => (
+            <View style={styles.box} key={eachItem.packageName.trim()}>
               <View style={styles.packageHeading}>
-                <Text style={styles.packageName}>{eachItem.name}</Text>
+                <Text style={styles.packageName}>{eachItem.packageName}</Text>
                 <Text style={[styles.textHeading, styles.fontStyle]}>
-                  Premium Package
+                  {eachItem.title}
                 </Text>
               </View>
 
               <View style={styles.boxesView}>
-                {eachItem.prices &&
-                  Object.keys(eachItem.prices).map((key, index) => (
+                {eachItem.plans &&
+                  eachItem.plans.map((key, index) => (
                     <TouchableOpacity
                       key={index}
                       onPress={() =>
                         setIndexSelected({
                           ...indexSelected,
-                          [eachItem.name]: index,
+                          [eachItem.packageName.trim().toLowerCase()]: key.id,
                         })
                       }>
                       <View
@@ -90,12 +70,16 @@ const Premium = () => {
                           styles.priceBox,
                           {
                             borderColor:
-                              index === indexSelected[eachItem.name]
+                              key.id ===
+                              indexSelected[eachItem.packageName.toLowerCase()]
                                 ? theme.colors.primary
                                 : theme.colors.light,
                           },
                         ]}>
-                        {index === indexSelected[eachItem.name] ? (
+                        {key.id ===
+                        indexSelected[
+                          eachItem.packageName.trim().toLowerCase()
+                        ] ? (
                           <Ionicons
                             name="checkbox"
                             size={15}
@@ -104,29 +88,20 @@ const Premium = () => {
                         ) : null}
 
                         <View style={styles.textInBox}>
-                          <View>
-                            <FontAwesome
-                              name="rupee"
-                              size={20}
-                              style={[styles.rupeeIcon, styles.fontStyle]}
-                            />
-                          </View>
-                          <View>
-                            <Text style={[styles.priceText, styles.fontStyle]}>
-                              {eachItem.prices[key]}
-                            </Text>
-                          </View>
+                          <Text style={[styles.priceText, styles.fontStyle]}>
+                            {eachItem.plans[index].price}
+                          </Text>
                         </View>
 
                         <Text style={[styles.timeText, styles.font]}>
-                          {key}
+                          {eachItem.plans[index].validity}
                         </Text>
                       </View>
                     </TouchableOpacity>
                   ))}
               </View>
 
-              {eachItem.details.map(detail => (
+              {eachItem.description.map(detail => (
                 <View style={styles.listStyle} key={detail}>
                   <Entypo
                     name="dot-single"
@@ -139,16 +114,16 @@ const Premium = () => {
                 </View>
               ))}
 
-              <View style={styles.subscribe}>
+              <TouchableOpacity style={styles.subscribe}>
                 <MaterialCommunityIcons
-                  name="lock-open-outline"
-                  size={20}
+                  name={eachItem.subscribeButton.icon.name}
+                  size={Number(eachItem.subscribeButton.icon.size)}
                   style={styles.iconColor}
                 />
                 <Text style={[styles.subscribeText, styles.fontStyle]}>
-                  Subscribe to Premium
+                  {eachItem.subscribeButton.title}
                 </Text>
-              </View>
+              </TouchableOpacity>
             </View>
           ))
         : null}

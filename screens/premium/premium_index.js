@@ -21,15 +21,10 @@ function PremiumScreen() {
       style={styles.gradient}>
       <>
         <View style={styles.navbarStyle}>
-          <View>
-            <Icon
-              name="arrow-back-ios"
-              size={20}
-              style={styles.backIcon}></Icon>
-          </View>
-          <View>
-            <Text style={styles.textInNav}>Premium</Text>
-          </View>
+          <Icon name="arrow-back-ios" size={20} style={styles.backIcon} />
+
+          <Text style={styles.textInNav}>Premium</Text>
+
           <View style={styles.NavIcons}>
             <View>
               <Ionicons
@@ -59,8 +54,6 @@ function PremiumScreen() {
     </LinearGradient>
   );
 }
-{
-}
 
 const styles = StyleSheet.create({
   gradient: {
@@ -84,6 +77,8 @@ const styles = StyleSheet.create({
     fontSize: normalize(theme.fontSizes.large),
     fontWeight: theme.fontWeight.normal,
     color: theme.colors.light,
+    position: 'absolute',
+    marginLeft: '45%', //doubt
   },
   backIcon: {color: theme.colors.light},
   NavIcons: {flexDirection: 'row', justifyContent: 'space-between'},
@@ -95,7 +90,7 @@ const styles = StyleSheet.create({
   scrollViewStyle: {
     flex: 1,
     paddingHorizontal: theme.spacing.medium,
-    marginBottom: 90, //to display entire screen
+    marginBottom: 90, //to display entire screen botom tab nav error
   },
 });
 

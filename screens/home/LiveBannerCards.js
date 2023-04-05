@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Alert,
   Dimensions,
@@ -10,14 +10,16 @@ import {
   View,
 } from 'react-native';
 import normalize from 'react-native-normalize';
-import LiveBannerinfo from './data/info.json'; //LiveBannerinfo are data in live banner
 import theme from '../theme';
+import {homePageData} from '../apiCalls';
 
 const {width, height} = Dimensions.get('window');
 const aspectRatio = width / height; //aspectRatio to declare height and width of the card
 
-//alert for Live banners
 const ScrollingBox = () => {
+  const [liveBannerCards, setLiveBannerCards] = useState(null);
+
+  //alert for Live banners
   const handlePress = title => {
     Alert.alert(title);
   };
@@ -26,14 +28,12 @@ const ScrollingBox = () => {
     return (
       <View
         style={
-          item.id !== LiveBannerinfo.scrolling.length
+          item.id !== liveBannerCards.length.toString()
             ? styles.container
             : styles.container2
         }>
         <TouchableOpacity onPress={() => handlePress(item.title)}>
-          <View>
-            <Image style={styles.image} source={{uri: item.image}} />
-          </View>
+          <Image style={styles.image} source={{uri: item.image}} />
           <View style={styles.textInBox}>
             <Text style={styles.heading}>{item.title}</Text>
             <Text style={styles.content}>{item.name}</Text>
@@ -43,10 +43,16 @@ const ScrollingBox = () => {
     );
   };
 
+  useEffect(() => {
+    homePageData().then(data => {
+      setLiveBannerCards(data ? data.liveBanners : null);
+    });
+  }, []);
+
   return (
     <View style={styles.svStyle}>
       <FlatList
-        data={LiveBannerinfo.scrolling}
+        data={liveBannerCards}
         keyExtractor={item => item.id.toString()}
         renderItem={renderItem}
         showsHorizontalScrollIndicator={false}
@@ -57,7 +63,6 @@ const ScrollingBox = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   line: {
     borderBottomColor: theme.colors.secondary,
