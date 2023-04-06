@@ -1,39 +1,51 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import normalize from 'react-native-normalize';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import theme from '../theme';
-
-const benifitList = [
-  'Live Yoga Classes Everyday',
-  'Live Meditation Session Everyday',
-  'Over 145 Holistic Health Regimens',
-  'Over 20 Video Based Regimens',
-];
+import {premiumPageData} from '../apiCalls';
 
 const BenifitsPremium = () => {
-  return (
-    <View>
-      <Text style={styles.textHeading}>Unlock Happily Health Premium</Text>
-      <View style={styles.benifits}>
-        {benifitList.length !== 0
-          ? benifitList.map(benifit => {
-              return (
-                <View key={benifit} style={styles.container}>
-                  <Icon
-                    name="check-circle-outline"
-                    size={18}
-                    style={styles.tickIcon}></Icon>
-                  <Text style={(styles.heading, styles.benifit)}>
-                    {benifit}
-                  </Text>
-                </View>
-              );
-            })
-          : null}
+  const [packageCardsData, setPackageCardsData] = useState(null);
+
+  useEffect(() => {
+    //fetching data from api
+    try {
+      premiumPageData().then(data => {
+        setPackageCardsData(data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  if (packageCardsData === null) {
+    return <Text>LOADING.....</Text>;
+  } else {
+    return (
+      <View>
+        <Text style={styles.textHeading}>{packageCardsData.title}</Text>
+        <View style={styles.benifits}>
+          {packageCardsData && packageCardsData.length !== 0
+            ? packageCardsData.premiumBenefits.map(benifit => {
+                return (
+                  <View key={benifit} style={styles.container}>
+                    <Icon
+                      name="check-circle-outline"
+                      size={18}
+                      style={styles.tickIcon}
+                    />
+                    <Text style={(styles.heading, styles.benifit)}>
+                      {benifit}
+                    </Text>
+                  </View>
+                );
+              })
+            : null}
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 };
 
 const styles = StyleSheet.create({

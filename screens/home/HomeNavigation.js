@@ -16,9 +16,7 @@ const TopNavBar = () => {
       <TouchableOpacity onPress={() => setModalVisible(true)}>
         <View style={styles.locationContainer}>
           <MaterialIcons name="location-on" size={20} style={styles.location} />
-          <Text style={styles.locationText}>
-            {location || 'Select location'}
-          </Text>
+          <Text style={styles.locationText}>{location || 'location'}</Text>
           <Entypo name="chevron-down" size={20} style={styles.drop} />
         </View>
       </TouchableOpacity>

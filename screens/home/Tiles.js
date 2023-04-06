@@ -20,6 +20,7 @@ const Box = ({title, image}) => {
   return (
     <View style={styles.box}>
       <Image source={{uri: image}} style={styles.image} />
+      {/* <Image style={styles.image} source={{ uri: image }} /> */}
       <Text style={styles.boxTitle}>{title}</Text>
     </View>
   );
@@ -37,7 +38,7 @@ const BoxGrid = () => {
   }, []);
   return (
     <FlatList
-      style={styles.tilesList}
+      style={{marginHorizontal: theme.spacing.medium}}
       data={tiles}
       renderItem={renderItem}
       keyExtractor={item => item.id}
