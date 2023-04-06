@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Dimensions,
   FlatList,
@@ -7,31 +7,38 @@ import {
   Text,
   View,
 } from 'react-native';
-import data from './data/boxinfo'; //data is data in the tiles
+import {homePageData} from '../apiCalls';
 import theme from '../theme';
 
-const numColumns = 3; 
+const numColumns = 3;
 const {width, height} = Dimensions.get('window');
 const aspectRatio = width / height; //aspectRatio is to declare the height and width of the tile
 
 //each tile contain image and title
 const Box = ({title, image}) => {
+  // console.log(image);
   return (
     <View style={styles.box}>
-      <Image source={image} style={styles.image} />
+      <Image source={{uri: image}} style={styles.image} />
       <Text style={styles.boxTitle}>{title}</Text>
     </View>
   );
 };
 
 const BoxGrid = () => {
+  const [tiles, SetTiles] = useState(null);
   const renderItem = ({item}) => {
     return <Box title={item.title} image={item.image} />;
   };
+  useEffect(() => {
+    homePageData().then(data => {
+      SetTiles(data ? data.tiles : null);
+    });
+  }, []);
   return (
     <FlatList
-      style={{marginHorizontal: theme.spacing.medium}}
-      data={data}
+      style={styles.tilesList}
+      data={tiles}
       renderItem={renderItem}
       keyExtractor={item => item.id}
       numColumns={numColumns}
@@ -40,6 +47,9 @@ const BoxGrid = () => {
 };
 
 const styles = StyleSheet.create({
+  tilesList: {
+    marginHorizontal: theme.spacing.medium,
+  },
   columnWrapper: {
     justifyContent: 'flex-start',
   },
@@ -68,6 +78,9 @@ const styles = StyleSheet.create({
   },
   image: {
     margin: theme.spacing.small,
+    aspectRatio: 1.1,
+    flex: 0.5,
+    resizeMode: 'contain',
   },
 });
 

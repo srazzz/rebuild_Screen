@@ -59,12 +59,10 @@ function PremiumScreen() {
     </LinearGradient>
   );
 }
-{
-}
 
 const styles = StyleSheet.create({
   gradient: {
-    flex: 1,
+    flex: 0.9,
     flexDirection: 'column',
   },
   background: {
@@ -95,7 +93,7 @@ const styles = StyleSheet.create({
   scrollViewStyle: {
     flex: 1,
     paddingHorizontal: theme.spacing.medium,
-    marginBottom: 90, //to display entire screen
+    // marginBottom: 90, //to display entire screen
   },
 });
 

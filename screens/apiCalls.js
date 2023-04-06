@@ -1,6 +1,6 @@
 export const homePageData = async () => {
   try {
-    const response = await fetch('http://192.168.0.138:3001/homescreenData', {
+    const response = await fetch('http://192.168.0.131:3001/homescreenData', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

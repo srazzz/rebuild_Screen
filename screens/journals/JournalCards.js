@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -44,10 +44,10 @@ const JournalCards = journalsData => {
   //converting 24 hours time to 12 hours with AM PM
   const formatAmPm = time => {
     time = time.split(' ');
-    ampm = time[1].split(':');
+    let ampm = time[1].split(':');
     ampm = ampm[0] > 12 ? 'PM' : 'AM';
-    hours = time[1].split(':');
-    minutes = hours[1];
+    let hours = time[1].split(':');
+    let minutes = hours[1];
     hours = hours[0] > 12 ? hours[0] - 12 : hours[0];
     return time[0] + ' ' + hours + ':' + minutes + ' ' + ampm;
   };
@@ -67,7 +67,7 @@ const JournalCards = journalsData => {
 
     animateView();
     getShow(); //getting the value from asyncStorge
-  }, [animation, isGoingUp, getShow]);
+  }, [animation, isGoingUp]);
 
   return (
     <>
@@ -108,6 +108,7 @@ const JournalCards = journalsData => {
                   <Text style={styles.title}>{eachJournal.title}</Text>
                   <Text style={styles.details}>{eachJournal.message}</Text>
                   <Text style={styles.date}>
+                    {eachJournal.date}
                     {formatAmPm(eachJournal.time).toUpperCase()}
                   </Text>
                 </View>
@@ -146,14 +147,13 @@ const JournalCards = journalsData => {
                         }
                         style={styles.mask}>
                         <Animated.View
-                          style={{
-                            alignItems: 'center',
-                            transform: [{translateY: animation}],
-                          }}>
+                          style={[
+                            styles.animatedViewStyle,
+                            {transform: [{translateY: animation}]},
+                          ]}>
                           <Text style={styles.transitionText}>
                             Scroll to view more
                           </Text>
-                          {/* <Entypo name="arrow-long-down" size={40} color="white" /> */}
                           <MaterialCommunityIcons
                             name="chevron-double-down"
                             size={30}
@@ -254,8 +254,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     marginBottom: 10,
-    fontSize: 16,
   },
   imagesText: {color: '#FA826F', marginLeft: 5},
+  animatedViewStyle: {
+    alignItems: 'center',
+  },
 });
 export default JournalCards;
